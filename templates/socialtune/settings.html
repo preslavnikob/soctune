@@ -1,0 +1,431 @@
+{% extends "socialtune/base.html" %}
+
+{% block content %}
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="row">
+
+                <div class="col " style="margin-left: 20px">
+                    <p></p>
+                    <div class="checkbox"><label><input class="sett" id="active-toogle" type="checkbox"
+                            {% if insta_on %} checked {% endif %}
+                                                        data-toggle="toggle" data-size="small">Active</label></div>
+                    <div class="checkbox"><label><input class="sett" id="like-toogle" type="checkbox"
+                            {% if insta_likes_on %} checked {% endif %}
+                                                        data-toggle="toggle" data-size="small">Like</label></div>
+                    <div class="checkbox"><label><input class="sett" id="comments-toogle" type="checkbox"
+                            {% if insta_comments_on %} checked {% endif %}
+                                                        data-toggle="toggle" data-size="small">Comments</label></div>
+                    <div class="checkbox"><label><input class="sett" id="follow-toogle" type="checkbox"
+                            {% if insta_follow_on %} checked {% endif %}
+                                                        data-toggle="toggle" data-size="small">Follow</label></div>
+                    <div class="checkbox"><label><input class="sett" id="unfollow-toogle" type="checkbox"
+                            {% if insta_unfollow_on %} checked {% endif %}
+                                                        data-toggle="toggle" data-size="small">Unfollow</label></div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <p></p>
+            <p><b>Total:</b></p>
+            <p>Followers: <b>{{ follows_by }}</b></p>
+            <p>Follows: <b>{{ follows }}</b></p>
+            <p>Media: <b>{{ media_count }}</b></p>
+            <p>Likes: <b>{{ likes_count }}</b></p>
+            <p>Comments: <b>{{ comments_count }}</b></p>
+
+        </div>
+        <div class="col-md-4">
+            <p></p>
+            <p><b>Today:</b></p>
+            <p>Likes: {{ like_count }}</p>
+            <p>Comments: {{ comment_count }}</p>
+            <p>Following: {{ follow_count }}</p>
+            <p>UnFollowing: {{ unfollow_count }}</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <ul class="nav nav-tabs nav-justified" id="settab">
+                <li class="nav-item"><a class="nav-link {% if menu_type == 1 %} active {% endif %}" data-toggle="tab"
+                                        role="tab" href="#t1"><img id="i1" src="static/svg/heart.svg"
+                                                                   class="img-fluid tab_set" width="30%"></a></li>
+                <li class="nav-item"><a class="nav-link {% if menu_type == 2 %} active {% endif %}" data-toggle="tab"
+                                        href="#t2"><span> <img id="i21" src="static/svg/heart.svg"
+                                                               class="img-fluid tab_set" width="30%"></span>
+                    <span><img id="i22" src="static/svg/comment.svg" class="img-fluid tab_set" width="30%"></span></a>
+                </li>
+                <li class="nav-item"><a class="nav-link {% if menu_type == 3 %} active {% endif %}" data-toggle="tab"
+                                        href="#t3"><span><img id="i31" src="static/svg/location.svg"
+                                                              class="img-fluid tab_set"
+                                                              width="25%"></span><span> <img id="i32"
+                                                                                             src="static/svg/heart.svg"
+                                                                                             class="img-fluid tab_set"
+                                                                                             width="30%"></span>
+                    <span><img id="i33"
+                               src="static/svg/comment.svg" class="img-fluid tab_set" width="30%"></span></a></li>
+                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#t4"><img id="i4"
+                                                                                           src="static/svg/tag.svg"
+                                                                                           class="img-fluid tab_set"
+                                                                                           width="30%"></a>
+                </li>
+                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#menu4">Follow 2</a></li>
+
+                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#menu6"><span
+                        class="fa fa-paper-plane-o"></span></a></li>
+            </ul>
+            <!-- Tab panes -->
+
+
+            <div class="tab-content">
+                <div id="t1" class="tab-pane {% if menu_type == 1 %} active {% endif %}" role="tabpanel">
+                    <div class="row" style="margin-left: 20px;margin-top: 20px">
+                        <div class="col">
+                            <div class="row">
+                                <h3>Hashtags</h3>
+                            </div>
+                            <div class="row">
+                                <form action="/settings" role="form" id="AddForm" method="post"
+                                      accept-charset="utf-8">{% csrf_token %}
+                                    <input type="hidden" name="type" value="hashtag_add">
+                                    <div class="input-group">
+                                        <!---<span class="input-group-addon">#</span> --->
+                                        <input name="hashtag_name" class="form-control" placeholder="Add hashtag here"
+                                               maxlength="200" type="text" id="1" required/> <span
+                                            class="input-group-btn">
+                        <div class="submit"><input class="btn btn-default" type="submit" value="Add"/></div></span>
+                                    </div>
+                                </form>
+                            </div>
+                            {% for name in hashtags %}
+                                <div class="row">
+                                    <form role="form" action="/settings" id="DeleteForm" method="post"
+                                          accept-charset="utf-8">{% csrf_token %}
+                                        <input type="hidden" name="type" value="hashtag_del">
+                                        <div class="input-group">
+                                            <input name="hashtag_name" class="form-control" value="{{ name }}"
+                                                   type="text"
+                                                   id="{{ name }}" required readonly>
+                                            <span class="input-group-btn">
+                                    <button class="btn btn-default" type="submit">Del</button>
+                                    </span>
+                                        </div>
+                                    </form>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div id="t2" class="tab-pane {% if menu_type == 2 %} active {% endif %}" role="tabpanel">
+                    <div class="row" style="margin-left: 20px;margin-top: 20px">
+                        <div class="col">
+                            <div class="row">
+                                <h3>Comments</h3>
+                            </div>
+                            <div class="row">
+                                <form action="/settings" role="form" id="CommentForm" method="post"
+                                      accept-charset="utf-8">{% csrf_token %}
+                                    <input type="hidden" name="type" value="comment_add">
+                                    <div class="input-group">
+                                        <input style="width: 50%;" class="form-control" name="caption_query"
+                                               placeholder="Add query here" id="caption_query" type="text" required>
+                                        <input style="width: 50%;" class="form-control" name="comment_text"
+                                               placeholder="Add comment over | here" id="comment_text" type="text"
+                                               required>
+                                        <button type="submit" class=" btn btn-default">Add</button>
+                                    </div>
+                                </form>
+                            </div>
+                            {% for c in comments %}
+                                <div class="row">
+                                    <form action="/settings" role="form" id="CommentDel" method="post"
+                                          accept-charset="utf-8">{% csrf_token %}
+                                        <input type="hidden" name="type" value="comment_del">
+                                        <div class="input-group">
+                                            <input type="hidden" name="id" value="{{ c.id }}">
+                                            <input style="width: 60%;" class="form-control"
+                                                   value="{{ c.caption_query }}"
+                                                   type="text" readonly/>
+                                            <input style="width: 60%;" class="form-control" value="{{ c.comment_text }}"
+                                                   type="text" readonly/>
+                                            <button type="submit" class=" btn btn-default">Del</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div id="t3" class="tab-pane {% if menu_type == 3 %} active {% endif %}" role="tabpanel">
+                    <div class="row" style="margin-left: 20px;margin-top: 20px">
+                        <div class="col">
+                            <div class="row">
+                                <h3>Location</h3>
+                            </div>
+                            <div class="row">
+                                <form role="form" action="/settings" id="LocationAddForm" method="post"
+                                      accept-charset="utf-8">{% csrf_token %}
+                                    <input type="hidden" name="type" value="location_add">
+                                    <div class="input-group">
+                                        <input name="location_name" class="form-control" value="{{ name }}" type="text"
+                                               placeholder="Add location here" id="1" required/>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="submit">Add</button>
+                                        </span>
+                                    </div>
+                                </form>
+                            </div>
+
+                            {% for location in locations %}
+                                <div class="row">
+                                    <form role="form" action="/settings" id="LocationDeleteForm" method="post"
+                                          accept-charset="utf-8">{% csrf_token %}
+                                        <input type="hidden" name="type" value="location_del">
+                                        <div class="input-group">
+                                            <input name="location_name" class="form-control" value="{{ location }}"
+                                                   type="text"
+                                                   id="1" required readonly><span class="input-group-btn">
+                                        <button class="btn btn-default" type="submit">Del</button> </span>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                </div>
+                <div id="t4" class="tab-pane {% if menu_type == 4 %} active {% endif %}" role="tabpanel">
+                    <div class="row" style="margin-left: 20px;margin-top: 20px">
+                        <div class="col-4">
+                            <div class="row">
+                                <h3 style="margin-left: 0px;">Whom to follow</h3>
+                            </div>
+                            <div class="row">
+                                <div class="checkbox">
+                                    <label><input class="sett" id="who-follow-toogle" type="checkbox"
+                                            {% if insta_who_follow_on %} checked {% endif %}
+                                                  data-toggle="toggle" data-size="small">Who follow a
+                                        influencers</label></div>
+                                <div class="checkbox">
+                                    <label><input class="sett" id="who-followedby-toogle" type="checkbox"
+                                            {% if insta_who_followedby_on %} checked {% endif %}
+                                                  data-toggle="toggle" data-size="small">Users
+                                        followed by a influencers</label></div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input class="sett" id="who-liked-toogle" type="checkbox"
+                                                {% if insta_who_liked_on %} checked {% endif %}
+                                               data-toggle="toggle" data-size="small">Who liked a
+                                        our content</label></div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="row">
+                                <h3 style="margin-left: 0px;">Influencers</h3>
+                            </div>
+                            <div class="row">
+                                <form action="/settings" role="form" id="CA_AddForm" method="post"
+                                      accept-charset="utf-8">{% csrf_token %}
+                                    <input type="hidden" name="type" value="CA_add">
+                                    <div class="input-group">
+
+                                        <input name="CA_name" class="form-control" placeholder="Add influencers here"
+                                               maxlength="200" type="text" id="1" required/> <span
+                                            class="input-group-btn">
+
+                                        <div class="submit"><input class="btn btn-default btn-block" type="submit"
+                                                                   value="Add"/></div></span>
+                                    </div>
+                                </form>
+                            </div>
+                            {% for ca in influencers %}
+                                <div class="row">
+                                    <form role="form" action="/settings" id="CA_DeleteForm" method="post"
+                                          accept-charset="utf-8">{% csrf_token %}
+                                        <input type="hidden" name="type" value="CA_del">
+                                        <div class="input-group">
+                                            <input name="CA_name" class="form-control"
+                                                   value="{{ ca.name }}"
+                                                   type="text"
+                                                   id="{{ ca }}" required readonly>
+                                            <span class="input-group-btn">
+                                    <button class="btn btn-default btn-block" type="submit">Del</button>
+                                    </span>
+                                        </div>
+                                    </form>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="col-4">
+                            <div class="row">
+                                <h3 style="margin-left: 0px;">Hashtags</h3>
+                            </div>
+                            <div class="row">
+                                <form action="/settings" role="form" id="AddForm" method="post"
+                                      accept-charset="utf-8">{% csrf_token %}
+                                    <input type="hidden" name="type" value="f_hashtag_add">
+                                    <div class="input-group">
+                                        <!---<span class="input-group-addon">#</span> --->
+                                        <input name="f_hashtag_name" class="form-control"
+                                               placeholder="Add hashtag here"
+                                               maxlength="200" type="text" id="1" required/>
+                                        <span class="input-group-btn">
+                                            <div class="submit">
+                                                <input class="btn btn-default" type="submit" value="Add"/>
+                                            </div>
+                                        </span>
+                                    </div>
+                                </form>
+                            </div>
+                            {% for name in f_hashtags %}
+                                <div class="row">
+                                    <form role="form" action="/settings" id="DeleteForm" method="post"
+                                          accept-charset="utf-8">{% csrf_token %}
+                                        <input type="hidden" name="type" value="f_hashtag_del">
+                                        <div class="input-group">
+                                            <input name="f_hashtag_name" class="form-control" value="{{ name.hashtag }}"
+                                                   type="text" id="{{ name.hashtag }}" required readonly> <span
+                                                class="input-group-btn"> <button class="btn btn-default"
+                                                                                 type="submit">Del</button> </span>
+                                        </div>
+                                    </form>
+                                </div>
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+                    <div class="row" style="margin-left: 20px;margin-top: 20px">
+                        <div class="col">
+                            <div class="row">
+                                <h3 style="margin-left: 0px;">Unfollow speed</h3>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="radio" name="Radio"
+                                           id="Radio1" value="option1" checked>Slow
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="radio" name="Radio"
+                                           id="Radio2" value="option2">Medium
+                                </label>
+                            </div>
+                            <div class="form-check ">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="radio" name="Radio"
+                                           id="Radio3" value="option3">Fast
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div id="menu4" class="tab-pane " role="tabpanel">
+                    <h3>Menu 4</h3>
+                </div>
+                <div id="menu6" class="tab-pane " role="tabpanel">
+                    <h3>Menu 6</h3>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $('a[href="#t1"]').on('shown.bs.tab', function (e) {
+                $('#i1').attr('src', 'static/svg/heart-on.svg');
+            });
+            $('a[href="#t1"]').on('hidden.bs.tab', function (e) {
+                $('#i1').attr('src', 'static/svg/heart.svg');
+            });
+
+            $('a[href="#t2"]').on('shown.bs.tab', function (e) {
+                $('#i21').attr('src', 'static/svg/heart-on.svg');
+                $('#i22').attr('src', 'static/svg/comment-on.svg');
+            });
+            $('a[href="#t2"]').on('hidden.bs.tab', function (e) {
+                $('#i21').attr('src', 'static/svg/heart.svg');
+                $('#i22').attr('src', 'static/svg/comment.svg');
+            });
+
+            $('a[href="#t3"]').on('shown.bs.tab', function (e) {
+                $('#i31').attr('src', 'static/svg/location-on.svg');
+                $('#i32').attr('src', 'static/svg/heart-on.svg');
+                $('#i33').attr('src', 'static/svg/comment-on.svg');
+            });
+            $('a[href="#t3"]').on('hidden.bs.tab', function (e) {
+                $('#i31').attr('src', 'static/svg/location.svg');
+                $('#i32').attr('src', 'static/svg/heart.svg');
+                $('#i33').attr('src', 'static/svg/comment.svg');
+            });
+
+            $('a[href="#t4"]').on('shown.bs.tab', function (e) {
+                $('#i4').attr('src', 'static/svg/tag-on.svg');
+            });
+            $('a[href="#t4"]').on('hidden.bs.tab', function (e) {
+                $('#i4').attr('src', 'static/svg/tag.svg');
+            });
+
+            function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = jQuery.trim(cookies[i]);
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+
+            $(function () {
+                $('.sett').change(function () {
+                    var d = {};
+                    d['active'] = $('#active-toogle').prop('checked');
+                    d['like'] = $('#like-toogle').prop('checked');
+                    d['comments'] = $('#comments-toogle').prop('checked');
+                    d['follow'] = $('#follow-toogle').prop('checked');
+                    d['unfollow'] = $('#unfollow-toogle').prop('checked');
+                    d['tags_on'] = $('#tags-toogle').prop('checked');
+                    d['who_follow'] = $('#who-follow-toogle').prop('checked');
+                    d['who_followedby'] = $('#who-followedby-toogle').prop('checked');
+                    d['who_liked'] = $('#who-liked-toogle').prop('checked');
+                    d['type'] = 'toggles';
+                    apost(d);
+                })
+            });
+
+            function apost(d) {
+                var csrftoken = getCookie('csrftoken');
+                d['csrfmiddlewaretoken'] = csrftoken;
+                $.ajax({
+                    type: 'POST',
+                    url: 'settings',
+                    data: d,
+                    dataType: 'json',
+                    cache: false,
+                    success: function (jsondata) {
+
+                    },
+
+                    error: function (xhr, status, errorThrown) {
+                        $(".alert").show();
+                    }
+                })
+
+            }
+
+
+        </script>
+{% endblock %}

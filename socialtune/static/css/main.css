@@ -1,0 +1,126 @@
+@import url(http://fonts.googleapis.com/css?family=Nunito:400,300,700);
+
+
+body {
+    font-family: "Nunito", Helvetica, Arial, sans-serif!important;
+}
+#firstrow{
+    font-family: 'Nunito', arial;
+    background-color:rgba(0,203,254,.8);
+    margin-top: 0px;
+    color:white;
+    margin-bottom: 20px;
+}
+object {
+    max-width: 100%;
+
+    display: block;margin: auto;padding:15px;
+}
+#lastrow{
+    margin-left: auto;
+    margin-right: auto;
+    background-color:rgba(0,203,254,.8);
+    margin-top: 100px;
+    margin-bottom: 20px;
+}
+#whiterow{
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    padding: 15px;
+    border-bottom: solid 3px rgba(210, 215, 217, 0.75);
+}
+
+#grayrow{
+    padding: 15px;
+    background-color:rgba(238,238,238,.8);
+    margin-bottom: 20px;
+    border-bottom: solid 3px rgba(210, 215, 217, 0.75);
+    display: block;
+}
+
+#wrow{
+    padding: 15px;
+
+    border-bottom: solid 3px rgba(210, 215, 217, 0.75);
+    display: block;
+}
+
+#grow{
+    padding: 15px;
+    background-color:rgba(238,238,238,.8);
+
+    border-bottom: solid 3px rgba(210, 215, 217, 0.75);
+    display: block;
+}
+
+h3{
+    display: block;
+    margin: auto;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+/*object {*/
+
+    /*!*position: relative;*!*/
+  /*!*top: 50%;*!*/
+  /*!*transform: translateY(-50%);*!*/
+/*}*/
+#feature_desc {
+   display:block;
+
+   color:white;
+    margin: auto;
+}
+
+
+#login-dp{
+    min-width: 250px;
+    padding: 14px 14px 0px;
+    overflow:hidden;
+    background-color:rgba(255,255,255,.8);
+}
+#login-dp .help-block{
+    font-size:12px
+}
+#login-dp .bottom{
+    background-color:rgba(255,255,255,.8);
+    border-top:1px solid #ddd;
+    clear:both;
+    padding:14px;
+}
+#login-dp .social-buttons{
+    margin:12px 0
+}
+#login-dp .social-buttons a{
+    width: 49%;
+}
+#login-dp .form-group {
+    margin-bottom: 10px;
+}
+.btn-fb{
+    color: #fff;
+    background-color:#3b5998;
+}
+.btn-fb:hover{
+    color: #fff;
+    background-color:#496ebc
+}
+.btn-tw{
+    color: #fff;
+    background-color:#55acee;
+}
+.btn-tw:hover{
+    color: #fff;
+    background-color:#59b5fa;
+}
+@media(max-width:768px){
+    #login-dp{
+        background-color: inherit;
+        color: #fff;
+    }
+    #login-dp .bottom{
+        background-color: inherit;
+        border-top:0 none;
+    }
+}

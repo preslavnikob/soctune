@@ -1,0 +1,93 @@
+{% extends "socialtune/base.html" %}
+
+{% block content %}
+
+    <div class="row content">
+        <div class="col-md-4">
+            <div class="row">
+                <table class="table table-hover">
+
+                    <tbody>
+                    <tr>
+                        <form action="/set" role="form" id="AddForm" method="post"
+                              accept-charset="utf-8">{% csrf_token %}
+                            <div class="input-group">
+                                <span class="input-group-addon">#</span>
+                                <input name="hashtag_name" class="form-control" placeholder="Add hashtag here"
+                                       maxlength="200" type="text" id="ScheduledLikeHashtag" required/> <span
+                                    class="input-group-btn">
+                        <div class="submit"><input class="btn btn-default" type="submit" value="Add"/></div></span>
+                            </div>
+                        </form>
+                    </tr>
+
+
+                    <tr>
+                        {% for name in hashtags %}
+                            <form role="form" action="/del" id="DeleteForm" method="post"
+                                  accept-charset="utf-8">{% csrf_token %}
+
+                                <div class="input-group">
+                                    <input name="hashtag_name" class="form-control" value="{{ name }}" type="text"
+                                           id="{{ name }}" required readonly><span class="input-group-btn">
+                                    <button class="btn btn-default" type="submit">Del</button>
+
+                                    </span></div>
+
+
+                            </form>
+                        {% endfor %}
+                    </tr>
+
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+        <div class="col-md-7">
+            <div class="row">
+                <form action="/setc" role="form" id="CommentForm" method="post"
+                              accept-charset="utf-8">{% csrf_token %}
+                    <div class="form-group">
+                        <div style="width: 40%" class="col-md-2">
+
+                            <input class="form-control" name="caption_query" placeholder="Add query here" id="caption_query" type="text" required>
+                        </div>
+                        <div style="width: 40%" class="col-md-2">
+                            <input class="form-control" name="comment_text" placeholder="Add comment over | here" id="comment_text" type="text" required>
+                        </div>
+                        <div style="width: 10%" class="col-md-2">
+                            <button type="submit" class=" btn btn-default">Add</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            {% for c in comments %}
+                <div class="row">
+                    <form action="/delc" role="form" id="CommentDel" method="post"
+                                  accept-charset="utf-8">{% csrf_token %}
+                        <div class="form-group">
+                            <input type="hidden" name="id" value="{{ c.id }}">
+                            <div style="width: 40%" class="col-md-2">
+
+                                <input class="form-control"  value="{{ c.caption_query }}"  type="text" readonly/>
+                            </div>
+                            <div style="width: 40%" class="col-md-2">
+                                <input class="form-control" value="{{ c.comment_text }}"  type="text" readonly/>
+                            </div>
+                            <div style="width: 10%" class="col-md-2">
+                                <button type="submit" class=" btn btn-default">Del</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            {% endfor %}
+
+        </div>
+
+        <div class="col-md-1"></div>
+    </div>
+
+{% endblock %}

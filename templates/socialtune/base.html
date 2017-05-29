@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>SocialTune</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=650, initial-scale=1"/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+          integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <script src="http://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+            integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+            integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+            crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/main.css">
+</head>
+<body>
+
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <h1 class="navbar-brand mb-0">SocialTune</h1>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+
+        <ul class="nav navbar-nav">
+            {% if user.is_authenticated %}
+                <li class="navbar-item"><p class="navbar-text">Welcome, <a href="#"
+                                                                           class="navbar-link">{{ user.username }} </a>
+                </p></li>
+                <li class="nav-item"><a class="nav-link" href="settings">Setting</a></li>
+                <li class="nav-item"><a class="nav-link" href="profile">Profile</a></li>
+                <li class="nav-item"><a class="nav-link" href="history">History</a></li>
+                <li class="nav-item"><a class="nav-link" href="logout/">Logout</a></li>
+            {% else %}
+
+                <li class="dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" class="dropdown-toggle" data-toggle="dropdown"
+                       role="button" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><b>Login</b></a>
+                    <ul id="login-dp" class="dropdown-menu  dropdown-menu-right">
+                        <li>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form class="form" role="form" method="post" action="/login/" accept-charset="UTF-8"
+                                          id="login-nav">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="next" value="/settings">
+                                        <div class="form-group">
+                                            <label class="sr-only" for="username">Login</label>
+                                            <input type="text" class="form-control" name="username" id="username"
+                                                   placeholder="login" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="sr-only" for="password">Password</label>
+                                            <input type="password" class="form-control" name="password" id="password"
+                                                   placeholder="Password" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="bottom text-center">
+                                    New here ? <a id="toggle" href="javascript:void(0);"><b>Join Us</b></a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                </li>
+            {% endif %}
+        </ul>
+
+    </div>
+</nav>
+<script type="text/javascript">
+    $(function () {
+        $('#toggle').click(function () {
+            $('#modal-transparent').modal('show')
+
+        });
+    });
+</script>
+
+
+<!-- Modal transparent -->
+<div style="margin: 0 auto;position:relative; " class="modal modal-transparent fade" id="modal-transparent"
+     tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span
+                        aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Register new user</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="form" role="form" method="post" action="/register/" accept-charset="UTF-8"
+                              id="login-nav">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="/settings">
+                            <div class="form-group row">
+                                <label class="col-4 col-form-label" for="username">Login</label>
+                                <div class="col-8 ">
+                                    <input type="text" class="form-control" name="username" id="username"
+                                           placeholder="login" required></div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-4 col-form-label" for="password1">Password</label>
+                                <div class="col-8">
+                                    <input type="password" class="form-control" name="password1" id="password1"
+                                           placeholder="Password" required></div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-4 col-form-label" for="password2">Repeat Password</label>
+                                <div class="col-8">
+                                    <input type="password" class="form-control" name="password2" id="password2"
+                                           placeholder="Repeat Password" required></div>
+
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-4 col-form-label" for="email">Email</label>
+                                <div class="col-8">
+                                    <input type="email" class="form-control" name="email" id="email"
+                                           placeholder="email" required></div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-4 col-form-label" for="insta_login">Insta Login</label>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" name="insta_login" id="insta_login"
+                                           placeholder="instagram login" required></div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-4 col-form-label" for="insta_password">Insta Password</label>
+                                <div class="col-8">
+                                    <input type="password" class="form-control" name="insta_password"
+                                           id="insta_password"
+                                           placeholder="Instagram Password" required></div>
+
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary btn-block">Register</button>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+
+
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    {% block content %}
+
+    {% endblock %}
+</div>
+</body>
+</html>

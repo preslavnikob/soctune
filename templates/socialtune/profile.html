@@ -1,0 +1,90 @@
+{% extends "socialtune/base.html" %}
+
+{% block content %}
+    <div class="row" id="wrow">
+        <div class="col">
+            <div class="row">
+                <div class="col-6">
+                    <p>Instagram account status: {{ insta_status }}</p>
+                    <p>Change instagram credentials:</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <form class="form" role="form" method="post" action="profile" accept-charset="UTF-8"
+                          id="login-nav">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="profile">
+                        <input type="hidden" name="type" value="insta_login">
+                        <div class="form-group row">
+                            <label class="col-3 col-form-label" for="insta_login">Insta Login</label>
+                            <div class="col-4">
+                                <input type="text" class="form-control" name="insta_login" id="insta_login"
+                                       placeholder="instagram login" value="{{ insta_login }}" required></div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-3 col-form-label" for="insta_password">Insta Password</label>
+                            <div class="col-4">
+                                <input type="password" class="form-control" name="insta_password"
+                                       id="insta_password"
+                                       placeholder="Instagram Password" required></div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-3 form-group">
+                                <button type="submit" class="btn btn-primary btn-block">Change</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" id="grow">
+        <div class="col">
+            <div class="row">
+                <div class="col">
+
+                    <p>{{ message }}</p>
+                </div>
+            </div>
+            {#            <div class="row">#}
+            {#                <div class="col">#}
+            {#                    <p>Buy one month subscription</p>#}
+            {#                    <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">#}
+            {#                        <input type="hidden" name="cmd" value="_s-xclick">#}
+            {#                        <input type="hidden" name="hosted_button_id" value="XM3JUV9SVPB2A">#}
+            {#                        <input type="hidden" name="notify_url" value="{{ notify_url }}">#}
+            {#                        <input type="image" src="https://www.sandbox.paypal.com/en_US/i/btn/btn_buynowCC_LG.gif"#}
+            {#                               border="0"#}
+            {#                               name="submit" alt="PayPal - The safer, easier way to pay online!">#}
+            {#                        <img alt="" border="0" src="https://www.sandbox.paypal.com/en_US/i/scr/pixel.gif" width="1"#}
+            {#                             height="1">#}
+            {#                    </form>#}
+            {#                </div>#}
+            {#            </div>#}
+
+            <div class="row">
+                <div class="col">
+                    <p>Buy one month subscription</p>
+                    <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                        <input type="hidden" name="notify_url" value="{{ notify_url }}">
+                        <input type="hidden" name="cmd" value="_s-xclick">
+                        <input type="hidden" name="hosted_button_id" value="42ME4V2A96X84">
+                        <input type="image" src="https://www.sandbox.paypal.com/en_US/i/btn/btn_subscribeCC_LG.gif"
+                               border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                        <img alt="" border="0" src="https://www.sandbox.paypal.com/en_US/i/scr/pixel.gif" width="1"
+                             height="1">
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+{% endblock %}
