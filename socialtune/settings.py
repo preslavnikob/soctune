@@ -29,7 +29,7 @@ SECRET_KEY = '$vee@c7r8vdn2ujaweu@6dqh_c1z!=5dw-v*om4w#hd4fs638c'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0','127.0.0.1','fatso.ml']
+ALLOWED_HOSTS = ['0.0.0.0','127.0.0.1','138.197.222.132']
 LOGIN_REDIRECT_URL='/set'
 LOGOUT_REDIRECT_URL='/'
 
